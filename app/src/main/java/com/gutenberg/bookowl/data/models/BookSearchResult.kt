@@ -2,17 +2,17 @@ package com.gutenberg.bookowl.data.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class BookSearchResult {
+data class BookSearchResult(
 
     @JsonProperty("count")
-    var totalBooks = 0
+    var totalBooks: Int = 0,
 
     @JsonProperty("next")
-    var nextPageUrl: String? = null
+    var nextPageUrl: String? = null,
 
     @JsonProperty("previous")
-    var previousPageUrl: String? = null
+    var previousPageUrl: String? = null,
 
     @JsonProperty("results")
-    val booksList: List<Book> = emptyList()
-}
+    var booksList: List<Book> = emptyList()
+)

@@ -2,8 +2,8 @@ package com.gutenberg.bookowl.data.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class Author {
+data class Author(
 
     @JsonProperty("name")
-    var name = ""
-}
+    var name: String = ""
+)

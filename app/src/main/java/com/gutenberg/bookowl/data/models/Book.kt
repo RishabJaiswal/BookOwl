@@ -2,11 +2,14 @@ package com.gutenberg.bookowl.data.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class Book {
+data class Book(
 
     @JsonProperty("title")
-    var title = ""
+    var title: String = "",
 
     @JsonProperty("authors")
-    var authors = emptyList<Author>()
-}
+    var authors: List<Author> = emptyList(),
+
+    @JsonProperty("formats")
+    var bookFormat: BookFormat = BookFormat()
+)
