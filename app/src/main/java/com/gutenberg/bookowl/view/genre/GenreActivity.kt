@@ -1,7 +1,8 @@
-package com.gutenberg.bookowl
+package com.gutenberg.bookowl.view.genre
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.gutenberg.bookowl.R
 
 class GenreActivity : AppCompatActivity() {
 
