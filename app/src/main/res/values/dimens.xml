@@ -5,4 +5,5 @@
     <dimen name="txt_title">20sp</dimen>
     <dimen name="txt_heading2">30sp</dimen>
     <dimen name="txt_heading1">48sp</dimen>
+    <dimen name="genre_white_space">24dp</dimen>
 </resources>

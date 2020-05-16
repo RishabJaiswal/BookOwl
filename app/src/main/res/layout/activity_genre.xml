@@ -7,26 +7,28 @@
     tools:context=".view.genre.GenreActivity">
 
     <!--background pattern-->
+
+    <!--app name-->
     <ImageView
         android:id="@+id/imv_bg_genre"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/art_genre_pattern"
         app:layout_constraintBottom_toBottomOf="@+id/tv_app_description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="ContentDescription" />
 
-    <!--app name-->
     <TextView
         android:id="@+id/tv_app_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="@dimen/genre_white_space"
+        android:layout_marginEnd="@dimen/genre_white_space"
         android:fontFamily="@font/montserrat_semi_bold"
         android:text="@string/app_name"
         android:textAlignment="textStart"
@@ -55,8 +57,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
