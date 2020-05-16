@@ -4,4 +4,7 @@
     <string name="app_name">Gutenberg Project</string>
     <string name="app_description">A social cataloging website that allows you to freely search its database of books, annotations, and reviews.</string>
 
+    <!--books-->
+    <string name="hint_search">Search</string>
+
 </resources>

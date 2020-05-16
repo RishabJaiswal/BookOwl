@@ -7,4 +7,5 @@
     <color name="surfaceColor">#F8F7FF</color>
     <color name="textPrimary">#333333</color>
     <color name="textSecondary">#A0A0A0</color>
+    <color name="smokeWhite">#f0f0f6</color>
 </resources>
