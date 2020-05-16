@@ -19,7 +19,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_genre_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_genre_title"
-        app:srcCompat="@drawable/ic_back" />
+        app:srcCompat="@drawable/ic_back"
+        tools:ignore="ContentDescription" />
 
     <!--genre title-->
     <TextView
