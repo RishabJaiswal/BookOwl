@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--genre icons-->
+    <integer-array name="genre_icons">
+        <item>@drawable/ic_fiction</item>
+        <item>@drawable/ic_drama</item>
+        <item>@drawable/ic_humour</item>
+        <item>@drawable/ic_politics</item>
+        <item>@drawable/ic_philosophy</item>
+        <item>@drawable/ic_history</item>
+        <item>@drawable/ic_adventure</item>
+    </integer-array>
+
+    <!--genre titles-->
+    <string name="genre_titles">
+        <item>fiction</item>
+        <item>drama</item>
+        <item>humor</item>
+        <item>politics</item>
+        <item>philosophy</item>
+        <item>history</item>
+        <item>adventure</item>
+    </string>
+
+</resources>
