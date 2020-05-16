@@ -2,6 +2,7 @@ package com.gutenberg.bookowl.view.genre
 
 import android.content.res.TypedArray
 import androidx.lifecycle.ViewModel
+import com.gutenberg.bookowl.data.models.Genre
 
 class GenreViewModel : ViewModel() {
 
@@ -14,7 +15,12 @@ class GenreViewModel : ViewModel() {
 
         //creating custom list
         titles.forEachIndexed { index, title ->
-            genreList.add(Genre(icons.getResourceId(index, 0), title))
+            genreList.add(
+                Genre(
+                    icons.getResourceId(index, 0),
+                    title
+                )
+            )
         }
         icons.recycle()
         return genreList

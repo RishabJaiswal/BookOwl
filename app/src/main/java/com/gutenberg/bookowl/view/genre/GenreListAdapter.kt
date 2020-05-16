@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gutenberg.bookowl.R
+import com.gutenberg.bookowl.data.models.Genre
 import kotlinx.android.synthetic.main.item_genre.view.*
 
 class GenreListAdapter(

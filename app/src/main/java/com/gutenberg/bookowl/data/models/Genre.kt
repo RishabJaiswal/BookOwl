@@ -1,4 +1,4 @@
-package com.gutenberg.bookowl.view.genre
+package com.gutenberg.bookowl.data.models
 
 import androidx.annotation.DrawableRes
 
