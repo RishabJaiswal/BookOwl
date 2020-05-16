@@ -1,5 +1,9 @@
 package com.gutenberg.bookowl.application
 
+/**
+ * This class in an implementation of
+ * <Loading Content Error> Design Pattern
+ * */
 sealed class Result<T> {
 
     class Progress<T> : Result<T>()
