@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp">
+
+    <!--book cover-->
+    <ImageView
+        android:id="@+id/imv_book_cover"
+        android:layout_width="@dimen/width_book_cover"
+        android:layout_height="162dp"
+        android:background="@drawable/shape_rect_grey_cr_8"
+        android:elevation="4dp"
+        tools:ignore="ContentDescription" />
+
+    <!--book title-->
+    <TextView
+        android:id="@+id/tv_book_title"
+        android:layout_width="@dimen/width_book_cover"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAllCaps="true"
+        android:textSize="@dimen/txt_caption"
+        android:fontFamily="@font/montserrat_semi_bold"
+        tools:text="THE OLD MAN AND THE SEA" />
+
+    <!--book author-->
+    <TextView
+        android:id="@+id/tv_book_author"
+        android:layout_width="@dimen/width_book_cover"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textSize="@dimen/txt_caption"
+        android:textColor="@color/textSecondary"
+        android:fontFamily="@font/montserrat_semi_bold"
+        tools:text="Charles Dickens" />
+
+</LinearLayout>

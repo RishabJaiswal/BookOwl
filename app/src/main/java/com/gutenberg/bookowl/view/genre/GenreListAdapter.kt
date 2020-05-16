@@ -13,12 +13,11 @@ class GenreListAdapter(
     val onGenreSelected: (genre: Genre) -> Unit
 ) : RecyclerView.Adapter<GenreListAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        LayoutInflater.from(parent.context)
             .inflate(R.layout.item_genre, parent, false)
-        return ViewHolder(view)
-    }
+    )
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(genreList[position])
