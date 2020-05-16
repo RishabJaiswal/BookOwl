@@ -7,10 +7,11 @@
     android:layout_marginTop="16dp">
 
     <!--book cover-->
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imv_book_cover"
         android:layout_width="@dimen/width_book_cover"
         android:layout_height="162dp"
+        android:scaleType="centerCrop"
         android:background="@drawable/shape_rect_grey_cr_8"
         android:elevation="4dp"
         tools:ignore="ContentDescription" />
@@ -23,6 +24,8 @@
         android:layout_marginTop="4dp"
         android:textAllCaps="true"
         android:textSize="@dimen/txt_caption"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat_semi_bold"
         tools:text="THE OLD MAN AND THE SEA" />
 
