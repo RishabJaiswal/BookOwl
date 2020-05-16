@@ -1,14 +1,14 @@
 package com.gutenberg.bookowl.data.books
 
 import com.gutenberg.bookowl.data.ApiClient
-import com.gutenberg.bookowl.data.models.Book
+import com.gutenberg.bookowl.data.models.BookSearchResult
 import io.reactivex.Flowable
 
 class BooksApiManager {
 
-    val booksApiService = ApiClient.createApiService(BooksApiService::class.java)
+    private val booksApiService = ApiClient.createApiService(BooksApiService::class.java)
 
-    fun getBooks(genreTitle: String): Flowable<List<Book>> {
+    fun getBooks(genreTitle: String): Flowable<BookSearchResult> {
         return booksApiService.getBooks(genreTitle)
     }
 }
