@@ -9,11 +9,13 @@ import com.gutenberg.bookowl.data.models.Genre
 import kotlinx.android.synthetic.main.item_genre.view.*
 
 class GenreListAdapter(
-    private val genreList: List<Genre>
+    private val genreList: List<Genre>,
+    val onGenreSelected: (genre: Genre) -> Unit
 ) : RecyclerView.Adapter<GenreListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater
+            .from(parent.context)
             .inflate(R.layout.item_genre, parent, false)
         return ViewHolder(view)
     }
@@ -26,13 +28,27 @@ class GenreListAdapter(
         return genreList.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    //View holder for Genre item
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+
+        private lateinit var genre: Genre
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(genre: Genre) {
+            this.genre = genre
             itemView.apply {
                 tv_genre_title.text = genre.title
                 imv_genre_icon.setImageResource(genre.icon)
             }
+        }
+
+        override fun onClick(v: View?) {
+            onGenreSelected(genre)
         }
     }
 }
