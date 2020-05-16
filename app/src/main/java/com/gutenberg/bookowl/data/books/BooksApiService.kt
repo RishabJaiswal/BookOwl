@@ -9,12 +9,14 @@ interface BooksApiService {
 
     @GET("books/")
     fun getBooks(
-        @Query("topic") genre: String
+        @Query("topic") genre: String,
+        @Query("mime_type") mimeType: String
     ): Flowable<BookSearchResult>
 
     @GET("books/")
     fun getBooks(
         @Query("topic") genre: String,
-        @Query("search") searchString: String
+        @Query("search") searchString: String,
+        @Query("mime_type") mimeType: String
     ): Flowable<BookSearchResult>
 }

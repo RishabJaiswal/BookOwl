@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gutenberg.bookowl.R
+import com.gutenberg.bookowl.application.utils.ImageLoader
 import com.gutenberg.bookowl.data.models.Book
 import kotlinx.android.synthetic.main.item_book.view.*
 
@@ -44,12 +45,16 @@ class BooksAdapter(private val interaction: Interaction? = null) :
 
         fun bind(book: Book) = with(itemView) {
             tv_book_title.text = book.title
+
             //setting author name
             tv_book_author.text = if (book.authors.isNotEmpty()) {
                 book.authors[0].name
             } else {
                 ""
             }
+
+            //setting book cover
+            ImageLoader.loadUrl(imv_book_cover, book.bookFormat.bookCoverUrl)
         }
     }
 
