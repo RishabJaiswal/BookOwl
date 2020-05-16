@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_marginTop="16dp"
+    android:elevation="4dp"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--genre icon-->
+        <ImageView
+            android:id="@+id/imv_genre_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_adventure"
+            tools:ignore="ContentDescription" />
+
+        <!--genre title-->
+        <TextView
+            android:id="@+id/tv_genre_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
+            android:textAllCaps="true"
+            android:textSize="@dimen/txt_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imv_next"
+            app:layout_constraintStart_toEndOf="@+id/imv_genre_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Genre title" />
+
+        <!--next icon-->
+        <ImageView
+            android:id="@+id/imv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
