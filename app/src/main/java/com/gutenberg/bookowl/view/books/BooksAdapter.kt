@@ -36,6 +36,7 @@ class BooksAdapter(private val interaction: Interaction? = null) :
 
         init {
             itemView.setOnClickListener(this)
+            itemView.imv_book_cover.clipToOutline = true
         }
 
         override fun onClick(v: View?) {

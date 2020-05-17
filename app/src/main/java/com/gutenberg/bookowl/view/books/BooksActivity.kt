@@ -3,17 +3,21 @@ package com.gutenberg.bookowl.view.books
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gutenberg.bookowl.R
 import com.gutenberg.bookowl.application.KEY_GENRE
 import com.gutenberg.bookowl.application.extensions.causedByInternetConnectionIssue
 import com.gutenberg.bookowl.application.extensions.configureViewModel
 import com.gutenberg.bookowl.application.extensions.visibleOrGone
+import com.gutenberg.bookowl.application.utils.GridSpacingItemDecoration
 import com.gutenberg.bookowl.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_books.*
+import kotlin.math.roundToInt
+
 
 class BooksActivity : BaseActivity() {
 
@@ -73,7 +77,28 @@ class BooksActivity : BaseActivity() {
      * Configures recyclerView for books
      * */
     private fun initBooksListing() {
-        val layoutManager = rv_books.layoutManager as LinearLayoutManager
+
+        //setting up grid span count based on screen size
+        val display = windowManager.defaultDisplay
+        val outMetrics = DisplayMetrics()
+        display.getMetrics(outMetrics)
+
+        val density = resources.displayMetrics.density
+        val screenDpWidth = outMetrics.widthPixels / density
+        val columns = (screenDpWidth / 114).roundToInt() - 1
+        val layoutManager = GridLayoutManager(this, columns)
+        rv_books.layoutManager = layoutManager
+
+        //adding equal spacing item decoration
+        rv_books.addItemDecoration(
+            GridSpacingItemDecoration(
+                columns,
+                resources.getDimensionPixelSize(R.dimen.width_book_cover)
+            )
+        )
+
+
+        //setting up scroll listener
         booksScrollListener = object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
