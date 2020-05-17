@@ -44,12 +44,23 @@ object ApiClient {
         client(okHttpClient)
     }
 
-    //building the retrofit client
+    //building the retrofit client with baseUrl
     private val retrofitClient: Retrofit = retrofitBuilder
         .baseUrl(BASE_URL)
         .build()
 
+
+    //building the retrofit client without baseUrl
+    private val baselessRetrofitClient: Retrofit by lazy {
+        retrofitBuilder
+            .build()
+    }
+
     fun <T> createApiService(serviceClass: Class<T>): T {
         return retrofitClient.create(serviceClass)
+    }
+
+    fun <T> createBaselessService(serviceClass: Class<T>): T {
+        return baselessRetrofitClient.create(serviceClass)
     }
 }

@@ -17,7 +17,7 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
     //connects to the api endpoint
     private val booksApiManager = BooksApiManager()
     //reactive stream for books list
-    val booksLiveResult = LiveResult<List<Book>>()
+    val booksLiveResult = LiveResult<MutableList<Book>>()
     //search string reactive stream
     val searchQuerySubject: PublishSubject<String> by lazy {
         PublishSubject.create<String>()
@@ -29,15 +29,42 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
     fun getBooks() {
         booksApiManager.getBooks(genreTitle)
             .subscribeOnBackObserverOnMain()
+            .doOnSubscribe { booksLiveResult.loading() }
             .subscribe({ bookSearchResult ->
                 //success
                 latestBookSearchResult = bookSearchResult
-                booksLiveResult.success(bookSearchResult.booksList)
+                booksLiveResult.success(bookSearchResult.booksList.toMutableList())
             }, { throwable ->
                 //error
                 booksLiveResult.error(throwable)
             })
             .addTo(disposable)
+    }
+
+    /**
+     * Fetches next page from the current result of books
+     * */
+    fun getBooksFromNextPage() {
+        latestBookSearchResult?.nextPageUrl?.let { nextPageUrl ->
+            booksApiManager.getBooksFromPage(nextPageUrl)
+                .subscribeOnBackObserverOnMain()
+                .doOnSubscribe { booksLiveResult.loading() }
+                .subscribe({ nextPageResult ->
+                    //success
+                    //appending next page books into current books list
+                    val booksList = mutableListOf<Book>().apply {
+                        addAll(latestBookSearchResult?.booksList ?: emptyList())
+                        addAll(nextPageResult.booksList)
+                    }
+                    booksLiveResult.success(booksList)
+
+                    latestBookSearchResult = nextPageResult
+                }, { throwable ->
+                    //error
+                    booksLiveResult.error(throwable)
+                })
+                .addTo(disposable)
+        }
     }
 
     /**
@@ -64,16 +91,21 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
                     }
             }
             .subscribeOnBackObserverOnMain()
+            .doOnSubscribe { booksLiveResult.loading() }
             .subscribe({ bookSearchResult ->
                 //success
                 latestBookSearchResult = bookSearchResult
-                booksLiveResult.success(bookSearchResult.booksList)
+                booksLiveResult.success(bookSearchResult.booksList.toMutableList())
             }, { throwable ->
                 //error
                 booksLiveResult.error(throwable)
             })
             .addTo(disposable)
     }
+
+
+    //checks for availability of next page
+    fun canLoadMoreBooks() = latestBookSearchResult?.nextPageUrl != null
 
     override fun onCleared() {
         disposable.clear()

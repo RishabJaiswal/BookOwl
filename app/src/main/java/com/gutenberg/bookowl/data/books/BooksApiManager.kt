@@ -8,6 +8,8 @@ import io.reactivex.Single
 class BooksApiManager {
 
     private val booksApiService = ApiClient.createApiService(BooksApiService::class.java)
+    private val booksResultPageApiService =
+        ApiClient.createBaselessService(BooksResultPageApiService::class.java)
 
     fun getBooks(genreTitle: String): Single<BookSearchResult> {
         return booksApiService.getBooks(genreTitle, MIME_IMAGE)
@@ -15,5 +17,9 @@ class BooksApiManager {
 
     fun getBooks(genreTitle: String, searchQuery: String): Single<BookSearchResult> {
         return booksApiService.getBooks(genreTitle, searchQuery.toLowerCase(), MIME_IMAGE)
+    }
+
+    fun getBooksFromPage(pageUrl: String): Single<BookSearchResult> {
+        return booksResultPageApiService.getBooksFromPage(pageUrl)
     }
 }
