@@ -9,9 +9,13 @@ import com.gutenberg.bookowl.data.models.Book
 import com.gutenberg.bookowl.data.models.BookSearchResult
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
+/**
+ * Single Source of truth: API endpoint
+ * */
 class BooksViewModel(val genreTitle: String) : ViewModel() {
 
     //connects to the api endpoint
@@ -23,7 +27,7 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
         PublishSubject.create<String>()
     }
     //stores the latest result for books
-    var latestBookSearchResult: BookSearchResult? = null
+    private var latestBookSearchResult: BookSearchResult? = null
     private val disposable = CompositeDisposable()
 
     fun getBooks() {
@@ -51,7 +55,7 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
                 .doOnSubscribe { booksLiveResult.loading() }
                 .subscribe({ nextPageResult ->
                     //success
-                    //appending next page books into current books list
+                    //appending books from next page result into current books list
                     val booksList = mutableListOf<Book>().apply {
                         addAll(latestBookSearchResult?.booksList ?: emptyList())
                         addAll(nextPageResult.booksList)
@@ -73,6 +77,7 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
     fun listenToSearch() {
         searchQuerySubject.debounce(400, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
+            .doOnEach { booksLiveResult.postLoading() }
             .switchMap { searchQuery ->
 
                 //defining the observable to return
@@ -86,12 +91,9 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
                 //returning the observable
                 return@switchMap bookQueryObservable
                     .toObservable()
-                    .doOnError {
-                        booksLiveResult.error(it)
-                    }
+                    .subscribeOn(Schedulers.io())
             }
             .subscribeOnBackObserverOnMain()
-            .doOnSubscribe { booksLiveResult.loading() }
             .subscribe({ bookSearchResult ->
                 //success
                 latestBookSearchResult = bookSearchResult
@@ -105,7 +107,8 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
 
 
     //checks for availability of next page
-    fun canLoadMoreBooks() = latestBookSearchResult?.nextPageUrl != null
+    fun canLoadMoreBooks() = latestBookSearchResult?.nextPageUrl != null &&
+            booksLiveResult.isLoading().not()
 
     override fun onCleared() {
         disposable.clear()

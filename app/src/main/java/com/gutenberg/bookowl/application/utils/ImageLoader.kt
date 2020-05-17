@@ -14,14 +14,12 @@ class ImageLoader {
         //fixme:: add application context instad of viewContext
         fun loadUrl(imageView: ImageView, url: String?) {
             if (!url.isNullOrEmpty()) {
-                Picasso.Builder(imageView.context)
-                    .build()
+                Picasso.get()
                     .load(url)
                     .placeholder(placeHolderId)
                     .into(imageView)
             } else {
-                Picasso.Builder(imageView.context)
-                    .build()
+                Picasso.get()
                     .load(placeHolderId)
                     .into(imageView)
             }

@@ -12,6 +12,7 @@ import com.gutenberg.bookowl.R
 import com.gutenberg.bookowl.application.KEY_GENRE
 import com.gutenberg.bookowl.application.extensions.causedByInternetConnectionIssue
 import com.gutenberg.bookowl.application.extensions.configureViewModel
+import com.gutenberg.bookowl.application.extensions.logError
 import com.gutenberg.bookowl.application.extensions.visibleOrGone
 import com.gutenberg.bookowl.application.utils.GridSpacingItemDecoration
 import com.gutenberg.bookowl.view.BaseActivity
@@ -68,6 +69,11 @@ class BooksActivity : BaseActivity() {
             }, { errorThrowable ->
                 //error
                 showError(errorThrowable)
+                logError(
+                    tag = "BooksError",
+                    message = "Error getting books",
+                    throwable = errorThrowable
+                )
             })
         })
     }
@@ -109,10 +115,7 @@ class BooksActivity : BaseActivity() {
                 areBooksScrolledToLast = firstVisibleItem + visibleItemCount >= totalItemCount
 
                 //loading more books
-                if (viewModel.canLoadMoreBooks() &&
-                    areBooksScrolledToLast &&
-                    viewModel.booksLiveResult.isLoading().not()
-                ) {
+                if (viewModel.canLoadMoreBooks() && areBooksScrolledToLast) {
                     viewModel.getBooksFromNextPage()
                 }
             }
@@ -156,7 +159,7 @@ class BooksActivity : BaseActivity() {
      * */
     private fun toggleProgress(show: Boolean) {
         pb_loading.visibleOrGone(show && areBooksScrolledToLast.not())
-        pb_load_more_books.visibleOrGone(show && areBooksScrolledToLast && viewModel.canLoadMoreBooks())
+        pb_load_more_books.visibleOrGone(show && areBooksScrolledToLast)
     }
 
     /**

@@ -8,6 +8,11 @@ class LiveResult<T> : MutableLiveData<Result<T>>() {
         value = Result.loading()
     }
 
+    /**this used when setting value from background thread*/
+    fun postLoading() {
+        postValue(Result.loading())
+    }
+
     fun success(data: T) {
         value = Result.success(data)
     }
