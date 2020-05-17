@@ -4,27 +4,26 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.View
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gutenberg.bookowl.R
 import com.gutenberg.bookowl.application.KEY_GENRE
-import com.gutenberg.bookowl.application.extensions.causedByInternetConnectionIssue
-import com.gutenberg.bookowl.application.extensions.configureViewModel
-import com.gutenberg.bookowl.application.extensions.logError
-import com.gutenberg.bookowl.application.extensions.visibleOrGone
+import com.gutenberg.bookowl.application.extensions.*
 import com.gutenberg.bookowl.application.utils.GridSpacingItemDecoration
+import com.gutenberg.bookowl.data.models.Book
 import com.gutenberg.bookowl.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_books.*
 import kotlin.math.roundToInt
 
 
-class BooksActivity : BaseActivity() {
+class BooksActivity : BaseActivity(), View.OnClickListener {
 
     private var areBooksScrolledToLast: Boolean = false
     private lateinit var booksScrollListener: RecyclerView.OnScrollListener
-    private val booksAdapter = BooksAdapter()
+    private val booksAdapter = BooksAdapter(this::onBookClicked)
     private val viewModel by lazy {
         val genreTitle = intent.getStringExtra(KEY_GENRE)
         configureViewModel {
@@ -36,6 +35,7 @@ class BooksActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
+        btn_back.setOnClickListener(this)
 
         //setting genre and books adapter
         tv_genre_title.text = viewModel.genreTitle.capitalize()
@@ -178,6 +178,31 @@ class BooksActivity : BaseActivity() {
             }
         })
         viewModel.listenToSearch()
+    }
+
+
+    private fun onBookClicked(book: Book) {
+        book.bookFormat.apply {
+            val allFormats = arrayOf<String?>(
+                htmlText_UTF_8_Url, htmlTextUrl,
+                pdfUrl,
+                plainText_UTF_8_Url, plainTextUrl
+            )
+
+            allFormats.forEach { formatUrl ->
+                if (formatUrl.isNullOrEmpty().not()) {
+                    formatUrl?.openLink(this@BooksActivity)
+                    return@forEach
+                }
+            }
+        }
+    }
+
+    //click listener
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btn_back -> onBackPressed()
+        }
     }
 
     companion object {

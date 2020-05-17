@@ -12,12 +12,12 @@ import com.gutenberg.bookowl.application.utils.ImageLoader
 import com.gutenberg.bookowl.data.models.Book
 import kotlinx.android.synthetic.main.item_book.view.*
 
-class BooksAdapter(private val interaction: Interaction? = null) :
+class BooksAdapter(private val onBookClicked: (book: Book) -> Unit) :
     ListAdapter<Book, BooksAdapter.BookViewHolder>(BookDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BookViewHolder(
         LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_book, parent, false), interaction
+            .inflate(R.layout.item_book, parent, false)
     )
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
@@ -31,7 +31,7 @@ class BooksAdapter(private val interaction: Interaction? = null) :
     /**
      * view holder for books item
      * */
-    inner class BookViewHolder(itemView: View, private val interaction: Interaction?) :
+    inner class BookViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView), OnClickListener {
 
         init {
@@ -41,7 +41,8 @@ class BooksAdapter(private val interaction: Interaction? = null) :
 
         override fun onClick(v: View?) {
             if (adapterPosition == RecyclerView.NO_POSITION) return
-            val clicked = getItem(adapterPosition)
+            val selectedBook = getItem(adapterPosition)
+            onBookClicked(selectedBook)
         }
 
         fun bind(book: Book) = with(itemView) {
