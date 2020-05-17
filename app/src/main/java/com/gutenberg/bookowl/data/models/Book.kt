@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Book(
 
+    @JsonProperty("id")
+    var id: Long = 0L,
+
     @JsonProperty("title")
     var title: String = "",
 

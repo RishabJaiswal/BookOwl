@@ -3,6 +3,7 @@ package com.gutenberg.bookowl.view.books
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.gutenberg.bookowl.R
@@ -29,11 +30,13 @@ class BooksActivity : AppCompatActivity() {
         tv_genre_title.text = viewModel.genreTitle.capitalize()
         rv_books.adapter = booksAdapter
         observeBooksList()
+        initSearch()
 
         //fetching initial books list
         viewModel.getBooks()
     }
 
+    //responding to changes in books list query
     private fun observeBooksList() {
         viewModel.booksLiveResult.observe(this, Observer {
             it.parseResult({
@@ -45,6 +48,21 @@ class BooksActivity : AppCompatActivity() {
                 //error
             })
         })
+    }
+
+    private fun initSearch() {
+        sv_search_books.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchQuerySubject.onComplete()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchQuerySubject.onNext(newText ?: "")
+                return true
+            }
+        })
+        viewModel.listenToSearch()
     }
 
     companion object {

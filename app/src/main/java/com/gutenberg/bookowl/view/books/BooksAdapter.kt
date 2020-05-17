@@ -67,15 +67,11 @@ class BooksAdapter(private val interaction: Interaction? = null) :
     private class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
 
         override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
-            TODO(
-                "not implemented"
-            )
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
-            TODO(
-                "not implemented"
-            )
+            return oldItem == newItem
         }
     }
 }
