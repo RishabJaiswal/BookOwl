@@ -10,14 +10,15 @@
     android:layout_marginStart="@dimen/genre_white_space"
     android:layout_marginEnd="@dimen/genre_white_space"
     android:elevation="4dp"
-    app:cardCornerRadius="4dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?android:attr/selectableItemBackground">
+    app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_genre"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground">
 
         <!--genre icon-->
         <ImageView

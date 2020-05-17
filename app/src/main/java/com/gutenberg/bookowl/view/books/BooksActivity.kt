@@ -167,6 +167,7 @@ class BooksActivity : BaseActivity(), View.OnClickListener {
      * */
     private fun initSearch() {
         sv_search_books.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchQuerySubject.onComplete()
                 return true
@@ -181,19 +182,30 @@ class BooksActivity : BaseActivity(), View.OnClickListener {
     }
 
 
+    //book click listener
     private fun onBookClicked(book: Book) {
         book.bookFormat.apply {
-            val allFormats = arrayOf<String?>(
-                htmlText_UTF_8_Url, htmlTextUrl,
-                pdfUrl,
+            val allFormats = arrayOf(
+                htmlText_UTF_8_Url, htmlTextUrl, pdfUrl,
                 plainText_UTF_8_Url, plainTextUrl
             )
 
-            allFormats.forEach { formatUrl ->
-                if (formatUrl.isNullOrEmpty().not()) {
-                    formatUrl?.openLink(this@BooksActivity)
-                    return@forEach
+            var bookContainsValidFormat = false
+            for (formatUrl in allFormats) {
+                if (formatUrl.isNullOrEmpty().not() && formatUrl?.isZipFile() == false) {
+                    formatUrl.openLink(this@BooksActivity)
+                    bookContainsValidFormat = true
+                    break
                 }
+            }
+
+            //showing error for no viewable version available
+            if (bookContainsValidFormat.not()) {
+                showAlertDialog(
+                    R.string.error_title,
+                    R.string.error_invalid_book_format,
+                    R.string.action_okay
+                )
             }
         }
     }

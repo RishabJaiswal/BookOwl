@@ -35,7 +35,7 @@ class GenreListAdapter(
         private lateinit var genre: Genre
 
         init {
-            itemView.setOnClickListener(this)
+            itemView.container_genre.setOnClickListener(this)
         }
 
         fun bind(genre: Genre) {

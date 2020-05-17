@@ -37,6 +37,8 @@
         android:layout_marginTop="2dp"
         android:textSize="@dimen/txt_caption"
         android:textColor="@color/textSecondary"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat_semi_bold"
         tools:text="Charles Dickens" />
 

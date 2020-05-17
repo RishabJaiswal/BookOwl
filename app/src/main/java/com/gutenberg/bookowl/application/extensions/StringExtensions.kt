@@ -10,3 +10,7 @@ fun String.openLink(context: Context) {
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(this)))
     }
 }
+
+fun String.isZipFile(): Boolean {
+    return this.endsWith(".zip")
+}
