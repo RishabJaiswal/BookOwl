@@ -37,6 +37,7 @@ object ApiClient {
         val objectMapper = ObjectMapper().apply {
             // don't fail on unknown properties
             configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false)
         }
         addConverterFactory(JacksonConverterFactory.create(objectMapper))
         addCallAdapterFactory(RxJava2CallAdapterFactory.create())
