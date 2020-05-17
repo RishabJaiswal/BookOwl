@@ -63,6 +63,8 @@
         android:id="@+id/rv_books"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,5 +72,28 @@
         app:layout_constraintTop_toBottomOf="@+id/sv_search_books"
         app:spanCount="3"
         tools:listitem="@layout/item_book" />
+
+    <!--loader for books fetching-->
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_search_books" />
+
+    <!--image for error-->
+    <ImageView
+        android:id="@+id/imv_error"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_search_books" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

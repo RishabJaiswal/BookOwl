@@ -22,13 +22,16 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
     val searchQuerySubject: PublishSubject<String> by lazy {
         PublishSubject.create<String>()
     }
+    //stores the latest result for books
+    var latestBookSearchResult: BookSearchResult? = null
     private val disposable = CompositeDisposable()
 
-    fun getBooks(searhQuery: String? = null) {
+    fun getBooks() {
         booksApiManager.getBooks(genreTitle)
             .subscribeOnBackObserverOnMain()
             .subscribe({ bookSearchResult ->
                 //success
+                latestBookSearchResult = bookSearchResult
                 booksLiveResult.success(bookSearchResult.booksList)
             }, { throwable ->
                 //error
@@ -63,6 +66,7 @@ class BooksViewModel(val genreTitle: String) : ViewModel() {
             .subscribeOnBackObserverOnMain()
             .subscribe({ bookSearchResult ->
                 //success
+                latestBookSearchResult = bookSearchResult
                 booksLiveResult.success(bookSearchResult.booksList)
             }, { throwable ->
                 //error

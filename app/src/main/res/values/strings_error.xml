@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_unknown">Oops!! something went wrong. Please try again.</string>
+    <string name="error_no_internet">Uh-Oh! It seems that your internet connection is either slow or unavailable! Please check your internet connection.</string>
+</resources>

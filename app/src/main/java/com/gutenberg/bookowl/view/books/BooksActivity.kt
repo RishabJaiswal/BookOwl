@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.gutenberg.bookowl.R
 import com.gutenberg.bookowl.application.KEY_GENRE
-import com.gutenberg.bookowl.application.extensions.configureViewModel
+import com.gutenberg.bookowl.application.extensions.*
+import com.gutenberg.bookowl.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_books.*
 
-class BooksActivity : AppCompatActivity() {
+class BooksActivity : BaseActivity() {
 
     private val booksAdapter = BooksAdapter()
     private val viewModel by lazy {
@@ -41,13 +41,40 @@ class BooksActivity : AppCompatActivity() {
         viewModel.booksLiveResult.observe(this, Observer {
             it.parseResult({
                 //loading
+                pb_loading.visible()
             }, { booksList ->
                 //content
+                pb_loading.gone()
                 booksAdapter.swapData(booksList)
-            }, {
+            }, { errorThrowable ->
                 //error
+                showError(errorThrowable)
             })
         })
+    }
+
+
+    private fun showError(throwable: Throwable) {
+        pb_loading.gone()
+        imv_error.visibleOrGone(booksAdapter.itemCount == 0)
+
+        //showing error image
+        if (booksAdapter.itemCount == 0) {
+            imv_error.setImageResource(
+                if (throwable.causedByInternetConnectionIssue())
+                    R.drawable.art_no_internet
+                else
+                    R.drawable.art_something_wrong
+            )
+        }
+
+        //showing toast
+        toast(
+            if (throwable.causedByInternetConnectionIssue())
+                R.string.error_no_internet
+            else
+                R.string.error_unknown
+        )
     }
 
     private fun initSearch() {
